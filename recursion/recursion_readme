@@ -1,0 +1,9 @@
+1. In recursion, we should have a base case.
+ex: 4! = 4 x 3!
+       = 4 x 3 x 2!
+       = 4 x 3 x 2 x 1!
+       = 4 x 3 x 2 x 1
+  Here, 1! = 1 is the base case
+
+2. Base case loi goi thakute Problem tu smaller hoi hoi goi thakibo lage. As in the above example, ami 4! k vagi vagi
+  last t 1! loi goi palu.
