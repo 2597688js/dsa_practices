@@ -28,6 +28,14 @@ def get_fibonacci_series(n_terms):
 
 # 2. using recursion
 def get_fibonacci_series_using_recursion(n:int):
+    """
+    The time complexity of the Fibonacci series using recursion is exponential, specifically O(2^n),
+     where 'n' is the input to the Fibonacci function.
+
+    This is because the naive recursive implementation recalculates the Fibonacci numbers for the same values multiple times.
+     For example, when calculating fib(n), it recursively calls fib(n-1) and fib(n-2), which in turn call further recursive calls,
+     leading to an exponential number of function calls.
+    """
     def fibonacci(n):
         if n < 1:
             return False
@@ -44,8 +52,8 @@ def get_fibonacci_series_using_recursion(n:int):
 
 
 if __name__ == "__main__":
-    # fibonacci_lst = get_fibonacci_series(8)
-    # print(fibonacci_lst)
+    fibonacci_lst = get_fibonacci_series(8)
+    print("Fibonacci series using loop :", fibonacci_lst)
 
     fibonacci_series = get_fibonacci_series_using_recursion(5)
     print(fibonacci_series)
