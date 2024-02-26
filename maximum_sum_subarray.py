@@ -66,6 +66,32 @@ def maxSubArraySum(arr):
     return f"subarray : {arr[start:end+1]}, sum : {max_so_far}"
 
 
+def maxSubarray_Sum(arr):
+    """
+    Kadane's algorithm. I find this is the easiest.
+    """
+    n = len(arr)
+    maxi = -9999 # maximum sum
+    sum = 0
+
+    for i in range(n):
+        sum += arr[i]
+
+        if sum > maxi:
+            maxi = sum
+
+        # If sum < 0: discard the sum calculated
+        if sum < 0:
+            sum = 0
+
+    # To consider the sum of the empty subarray
+    # uncomment the following check:
+
+    #if maxi < 0: maxi = 0
+
+    return maxi
+
+
 if __name__ == "__main__":
     print(maxSubArraySum([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
     print(maxSubArraySum([-2, -1, -3, -4, -1, -2, -1, -5, -4]))
@@ -73,8 +99,18 @@ if __name__ == "__main__":
     print(maxSubArraySum([-1, -1, 10]))
     print(maxSubArraySum([5, 4, -1, 7, 8]))
     print(maxSubArraySum([-1, -2, -3, -4, -5]))
+    print(maxSubArraySum([-5, -4, -3, -2, -1]))
+    print()
 
     print(max_subarray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
     print(max_subarray([-2, -1, -3, -4, -1, -2, -1, -5, -4]))
     print(max_subarray([-2, -3, 4, -1, -2, 1, 5, -3]))
+    print(max_subarray([-1, -1, 10]))
+    print(max_subarray([5, 4, -1, 7, 8]))
     print(max_subarray([-1, -2, -3, -4, -5]))
+    print(max_subarray([-5, -4, -3, -2, -1]))
+    print()
+
+    print(maxSubarray_Sum([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
+    print(maxSubarray_Sum([-5, -4, -3, -2, -1]))
+    print(maxSubarray_Sum([-1, -2, -3, -4, -5]))
