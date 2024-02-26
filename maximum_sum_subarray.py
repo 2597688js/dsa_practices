@@ -20,7 +20,8 @@ Output: 23
 Explanation: The subarray [5,4,-1,7,8] has the largest sum 23. subarray should be always contiguous. i.e.,
           we can not consider [5, 4, 7, 8] as a subarray whose sum is 24.
 
-Solution 1 : using Kadane's algorithm
+Solution 1: Bruteforce - O(n^3) - find all the possible subarray and the find the maximum sum.
+Solution 2 : using Kadane's algorithm - O(n)
 """
 
 
@@ -71,7 +72,9 @@ if __name__ == "__main__":
     print(maxSubArraySum([-2, -3, 4, -1, -2, 1, 5, -3]))
     print(maxSubArraySum([-1, -1, 10]))
     print(maxSubArraySum([5, 4, -1, 7, 8]))
+    print(maxSubArraySum([-1, -2, -3, -4, -5]))
 
     print(max_subarray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
     print(max_subarray([-2, -1, -3, -4, -1, -2, -1, -5, -4]))
     print(max_subarray([-2, -3, 4, -1, -2, 1, 5, -3]))
+    print(max_subarray([-1, -2, -3, -4, -5]))
