@@ -56,6 +56,11 @@ def findSecondLargest(arr):
                 second_largest = arr[i]
 
     return second_largest
+"""
+Time complexity : O(n), since we are traversing the array only once. 
+Logic used is : jodi amar hatot eta largest element thake, aru in later stage ami beleg eta largest element
+pai jau, tente agor largest element tu amar second_largest element hoi jabo. 
+"""
 
 
 if __name__ == "__main__":
