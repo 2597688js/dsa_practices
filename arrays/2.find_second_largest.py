@@ -30,7 +30,7 @@ def find_second_largest(arr):
     largest = find_largest(arr)
     second_largest = arr[0]
     for i in range(len(arr)):
-        if (arr[i] > second_largest) and (arr[i] < largest):
+        if (arr[i] > second_largest) and (arr[i] != largest):
             second_largest = arr[i]
 
     return second_largest
