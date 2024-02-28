@@ -7,3 +7,12 @@ ex: 4! = 4 x 3!
 
 2. Base case loi goi thakute Problem tu smaller hoi hoi goi thakibo lage. As in the above example, ami 4! k vagi vagi
   last t 1! loi goi palu.
+
+3. Backtracking :
+Printing from start to end in the Normal approach
+printing is started in the end and ended in the starting is back tracking. i.e., actual code execution tu last
+r falor pora start hoi. 
+
+
+In normal recursion things happens while going in forward pass, while
+in backtracking, things happens in coming back, that's why the term backtracking.
