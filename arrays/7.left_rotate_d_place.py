@@ -33,6 +33,11 @@ The steps are as follows:
         we will do this: arr[i] = temp[i-(n-d)].
 """
 
+
+def leftRotate_d_place_brutefore(arr, d):
+    pass
+
+
 # 3. Optimal approach
 """
 Optimized Approach(without using any extra space): Using “Reversal Algorithm” This is a straightforward method.
@@ -45,10 +50,6 @@ Time Complexity: O(d)+O(n-d)+O(n) = O(2*n), where n = size of the array, d = the
                   Each term corresponds to each reversal step.
 Space Complexity: O(1) since no extra space is required.
 """
-
-
-def leftRotate_d_place_brutefore(arr, d):
-    pass
 
 
 def leftRotate_d_place_optimal(arr, d):
