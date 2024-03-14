@@ -39,9 +39,28 @@ Example 2:
 
 
 # 1.Bruteforce
+"""
+Approach : Eta list lua, the given array keitar karone iterate kori jodi element tu already union list t nathake, the 
+           add kora.
+           
+Time complexity : O(m logm + n logn), where m -> size of arr1; n -> size of arr2. Because, if we use set (which we should
+use ), it uses binary tree to insert elements and binary tree insertion is log n.
+Space complexity : O(m + n), in worst case we will need the total of m + n space. 
+"""
 def unionOfSortedArrays_bruteforce(arr1, arr2):
-    pass
+    union_list = []
+
+    for element in arr1:
+        if element not in union_list:
+            union_list.append(element)
+
+    for element2 in arr2:
+        if element2 not in union_list:
+            union_list.append(element2)
+
+    return union_list
 
 
 if __name__ == "__main__":
-    pass
+    print(unionOfSortedArrays_bruteforce([1, 2, 3, 4, 5], [2, 3, 4, 4, 5]))
+    print(unionOfSortedArrays_bruteforce([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 3, 4, 4, 5, 11, 12]))
