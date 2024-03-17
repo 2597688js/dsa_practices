@@ -15,7 +15,7 @@ Example 2:
     Explanation: There are two consecutive 1's in the array.
 """
 
-# 1.Bruteforce
+# No Bruteforce, Better and Optimal approach, It's a simple approach
 """
 Approach: 
  1. We maintain a variable count that keeps a track of the number of consecutive 1’s while traversing the array. The other variable
