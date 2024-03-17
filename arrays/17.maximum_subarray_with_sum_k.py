@@ -69,6 +69,33 @@ def maximum_subarray_with_sum_k_bruteforce2(arr, k):
 
 # 3. Optimal - Using Hashing
 """
+Optimal Approach (Using Hashing): 
+Approach:
+The steps are as follows:
+    1. First, we will declare a map to store the prefix sums and the indices.
+    2. Then we will run a loop(say i) from index 0 to n-1(n = size of the array).
+    3. For each index i, we will do the following:
+        3.1 We will add the current element i.e. a[i] to the prefix sum.
+        3.2 If the sum is equal to k, we should consider the length of the current subarray i.e. i+1. We will compare this length with the existing 
+            length and consider the maximum one.
+        3.3 We will calculate the prefix sum i.e. x-k, of the remaining subarray.
+        3.4 If that sum of the remaining part i.e. x-k exists in the map, we will calculate the length i.e. i-preSumMap[x-k], and consider the 
+            maximum one comparing it with the existing length we have achieved until now.
+        3.5 If the sum, we got after step 3.1, does not exist in the map we will add that with the current index into the map. We are checking the 
+            map before insertion because we want the index to be as minimum as possible and so we will consider the earliest index where the sum 
+            x-k has occurred.
+            
+    In this approach, we are using the concept of the prefix sum to solve this problem. Here, the prefix sum of a subarray ending at index i,
+     simply means the sum of all the elements of that subarray.
+     
+Complexity Analysis
+    Time Complexity:
+        O(N) or O(N*logN) depending on which map data structure we are using, where N = size of the array.
+    Reason: For example, if we are using an unordered_map data structure in C++ the time complexity will be O(N)(though in the worst case, 
+    unordered_map takes O(N) to find an element and the time complexity becomes O(N2)) but if we are using a map data structure, 
+    the time complexity will be O(N*logN). The least complexity will be O(N) as we are using a loop to traverse the array.
+    
+    Space Complexity: O(N) as we are using a map data structure.
 """
 def maximum_subarray_with_sum_k_optimal(arr, k):
     n = len(arr)
