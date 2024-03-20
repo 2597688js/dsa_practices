@@ -9,7 +9,10 @@ binary_to_decimal = lambda binary_num: int(binary_num, 2)
 
 """
 
+# This is the most naive approach
+"""
 
+"""
 def binary_to_decimal(binary_num:str):
     digit_len = len(binary_num)
     decimal_num = 0
@@ -22,8 +25,32 @@ def binary_to_decimal(binary_num:str):
     return decimal_num
 
 
+# Another logic to calculate the power of 2
+def binary_to_decimal1(binary_num: str):
+    """
+    here, we are not calculating exponent value each time, this is expensive.
+    Instead, we are using the same previous multiplication value iteratively.
+    """
+    decimal_num = 0
+
+    digit_len = len(binary_num)
+    pow_val = 1
+
+    for i in range(digit_len):
+        curr_digit = binary_num[digit_len - (i+1)]
+        decimal_num += int(curr_digit) * pow_val
+        pow_val = 2 * pow_val
+
+
+    return decimal_num
+
+
 if __name__ == "__main__":
     print(binary_to_decimal('1010'))
     print(binary_to_decimal('10100'))
     print(binary_to_decimal('10000'))
+    print()
+    print(binary_to_decimal1('1010'))
+    print(binary_to_decimal1('10100'))
+    print(binary_to_decimal1('10000'))
 
