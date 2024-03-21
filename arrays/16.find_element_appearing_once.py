@@ -2,7 +2,8 @@
 Author : Janarddan Sarkar
 file_name : 16.find_element_appearing_once.py 
 date : 16-03-2024
-description : Problem Statement: Given a non-empty array of integers arr, every element appears twice except for one. Find that single one.
+description : Problem Statement: Given a non-empty array of integers arr, every element appears twice except for one.
+Find that single one.
 
 Example 1:
     Input Format: arr[] = {2,2,1}
@@ -19,8 +20,8 @@ Example 2:
 """"
 Naive Approach(Brute-force approach): 
 Intuition:
-For every element present in the array, we will do a linear search and count the occurrence. If for any element, the occurrence is 1, 
-we will return it.
+For every element present in the array, we will do a linear search and count the occurrence. If for any element, 
+the occurrence is 1, we will return it.
 
 Approach:
 The steps are as follows:
@@ -49,8 +50,8 @@ def find_element_appearing_once_bruteforce(arr):
 """
 Better Approach(Using Hashing): 
 Intuition:
-In the previous approach, we were finding the occurrence of an element using linear search. We can optimize this using hashing technique.
-We can simply hash the elements along with their occurrences in the form of (key, value) pair. 
+In the previous approach, we were finding the occurrence of an element using linear search. We can optimize this using
+hashing technique. We can simply hash the elements along with their occurrences in the form of (key, value) pair. 
 Thus, we can reduce the cost of finding the occurrence and hence the time complexity.
 
 Now, hashing can be done in two different ways and they are the following:
@@ -84,6 +85,30 @@ def find_element_appearing_once_better(arr):
             return k
 
 
+# 3. Optimal
+"""
+Optimal Approach(Using XOR): 
+Intuition:
+    Two important properties of XOR are the following:
+    
+    XOR of two same numbers is always 0 i.e. a ^ a = 0. ←Property 1.
+    XOR of a number with 0 will result in the number itself i.e. 0 ^ a = a.  ←Property 2
+    
+    Here all the numbers except the single number appear twice and so will form a pair. Now, if we perform XOR of all
+     elements of the array, the XOR of each pair will result in 0 according to the XOR property 1.
+      The result will be = 0 ^ (single number) = single number (according to property 2).
+    
+    So, if we perform the XOR of all the numbers of the array elements, we will be left with a single number.
+
+Approach:
+    We will just perform the XOR of all elements of the array using a loop and the final XOR will be the answer.
+    
+Complexity Analysis
+    Time Complexity: O(N), where N = size of the array.
+    Reason: We are iterating the array only once.
+    
+    Space Complexity: O(1) as we are not using any extra space.
+"""
 def find_element_appearing_once_optimal(arr):
     xor_res = 0
     for x in arr:
