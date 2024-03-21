@@ -7,9 +7,6 @@ description : Given a number N and i, check if i-th bit is set or not. if set, r
 Example : 13 in decimal = 1101 in binary. if i = 1, then 1st bit from right is 0, which is not set. So return False.
                                           if i = 0, then 0-th bit from right is 1, which is set. So return True
 
-Logic is:
-    Using Left shift operator:
-        if [N & (1 << i)] != 0, then i-the bit is set, otherwise unset.
 """
 
 
@@ -29,6 +26,19 @@ def isIthBitSet_bruteforce(decimal_num, i):
 
 
 # 3. Optimal
+"""
+Logic is:
+    Using Left shift operator:
+        if [N & (1 << i)] != 0, then i-the bit is set, otherwise unset.
+
+    Using Right shift operator:
+        if [(N >> i) & 1] == 0, then i-th bit is unset, else it is set.
+        
+Complexity Analysis:
+    TC - O(1)
+    SC - O(1)
+    Because, computer performs bitwise operations much much faster. 
+"""
 def isIthBitSet_optimal(decimal_num, i):
     binary_num = bin(decimal_num)[2:]
     print(binary_num)
