@@ -22,6 +22,10 @@ def binary_search_prac(arr, k):
         elif k > arr[mid]:
             left = mid + 1
 
+"""
+Time complexity - O(log n); n = length of the array
+"""
+
 
 if __name__ == "__main__":
     print(binary_search_prac([1, 22, 39, 49, 51, 67, 74, 87], 87))

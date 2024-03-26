@@ -139,9 +139,10 @@ def find_missing_number_optimal1(arr, N):
 """
 Algorithm / Intuition
 XOR Approach:
-Note: Among the optimal approaches, the XOR approach is slightly better than the summation one because the term (N * (N+1))/2 used in the
- summation method cannot be stored in an integer if the value of N is big (like 105). In that case, we have to use some bigger data types.
-  But we will face no issues like this while using the XOR approach.
+Note: Among the optimal approaches, the XOR approach is slightly better than the summation one because the term
+(N * (N+1))/2 used in the summation method cannot be stored in an integer if the value of N is big (like 105).
+In that case, we have to use some bigger data types.
+ But we will face no issues like this while using the XOR approach.
 
 Intuition:
 Two important properties of XOR are the following:
@@ -158,21 +159,24 @@ xor2 = 1^2^……^N (contains all the numbers except the missing one).
 Now, if we again perform XOR between xor1 and xor2, we will get:
 xor1 ^ xor2 = (1^1)^(2^2)^……..^(missing Number)^…..^(N^N)
 
-Here all the numbers except the missing number will form a pair and each pair will result in 0 according to the XOR property. The result will be = 0 ^ (missing number) = missing number (according to property 2).
+Here all the numbers except the missing number will form a pair and each pair will result in 0 according to the
+XOR property. The result will be = 0 ^ (missing number) = missing number (according to property 2).
 
-So, if we perform the XOR of the numbers 1 to N with the XOR of the array elements, we will be left with the missing number.
+So, if we perform the XOR of the numbers 1 to N with the XOR of the array elements, we will be left with the
+missing number.
 
 Approach:
 The steps are as follows:
     1. We will first run a loop(say i) from 0 to N-2(as the length of the array = N-1).
-    2. Inside the loop, xor2 variable will calculate the XOR of array elements i.e. xor2 = xor2 ^ a[i]. And the xor1 variable will calculate the 
-       XOR of 1 to N-1 i.e. xor1 = xor1 ^ (i+1).
+    2. Inside the loop, xor2 variable will calculate the XOR of array elements i.e. xor2 = xor2 ^ a[i].
+       And the xor1 variable will calculate the XOR of 1 to N-1 i.e. xor1 = xor1 ^ (i+1).
     3. After the loop ends we will XOR xor1 and N to get the total XOR of 1 to N.
     Finally, the answer will be the XOR of xor1 and xor2.
     
 Complexity Analysis
     Time Complexity: O(N), where N = size of array+1.
-    Reason: Here, we need only 1 loop to calculate the XOR. The loop runs for approx. N times. So, the time complexity is O(N).
+    Reason: Here, we need only 1 loop to calculate the XOR. The loop runs for approx. N times.
+            So, the time complexity is O(N).
     
     Space Complexity: O(1) as we are not using any extra space.
 """
@@ -183,7 +187,7 @@ def find_missing_number_optimal2(arr, N):
         actual_xor_res = actual_xor_res ^ arr[i]
         ideal_xor_res = ideal_xor_res ^ (i + 1)
 
-    # Till now ee have 1 ^ 2 ^ 3 ^ . . . (N-1), so we need to XOR the N
+    # Till now we have 1 ^ 2 ^ 3 ^ . . . (N-1), so we need to XOR the N
     ideal_xor_res = ideal_xor_res ^ N
 
     missing_num = actual_xor_res ^ ideal_xor_res

@@ -19,23 +19,21 @@ SPace complexity: O(1); no extra space is used
 """
 
 
-def selection_sort(arr):
+def selection_sort_prac(arr):
     n = len(arr)
-
-    for i in range(n):
+    for i in range(n - 1):
         smallest_idx = i
-        for j in range(i, n):
+        for j in range(i + 1, n):
             if arr[j] < arr[smallest_idx]:
                 smallest_idx = j
 
-        # swap
-        temp = arr[i]
-        arr[i] = arr[smallest_idx]
-        arr[smallest_idx] = temp
+        # Swap the smallest element with the current element
+        arr[i], arr[smallest_idx] = arr[smallest_idx], arr[i]
 
     return arr
 
 
 if __name__ == "__main__":
-    print(selection_sort([64, 25, 12, 22, 11]))
-    print(selection_sort([640, 350, 212, 122, 11]))
+    print(selection_sort_prac([1, 1, 1, 1, 1]))
+    print(selection_sort_prac([5, 5, 6, 7, 8, 9]))
+
