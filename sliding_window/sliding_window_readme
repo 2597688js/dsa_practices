@@ -1,1 +1,13 @@
 # Sliding window readme
+
+Sliding Window problems are problems in which a fixed or variable-size window is moved through a data structure,
+typically an array or string, to solve problems efficiently based on continuous subsets of elements. This technique
+is used when we need to find subarrays or substrings according to a given set of conditions.
+
+The following pattern problems can be solved by sliding window / two pointer approach
+
+1. Constant window
+
+2. Longest subarray / substring where <condition>   -- Bruteforce, better, optimal
+
+3. Number of subarrays where <condition>  -- Bruteforce, better, optimal
