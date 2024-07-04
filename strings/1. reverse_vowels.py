@@ -53,5 +53,6 @@ def reverse_vowels_easy(s):
 # Example usage:
 input_string = "hello world"
 result = reverse_vowels(input_string)
+result = reverse_vowels(input_string)
 print("Original string:", input_string)
 print("String with reversed vowels:", result)
