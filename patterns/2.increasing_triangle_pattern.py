@@ -10,7 +10,7 @@ Description :   *
 """
 
 
-def print_increasing_triangle_pattern(n_row):
+def print_increasing_triangle_pattern1(n_row):
     for i in range(n_row):
         for j in range(i+1):
             print("*", end="  ")
@@ -19,4 +19,4 @@ def print_increasing_triangle_pattern(n_row):
 
 
 if __name__ == "__main__":
-    print_increasing_triangle_pattern(5)
+    print_increasing_triangle_pattern1(5)

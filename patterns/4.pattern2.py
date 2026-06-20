@@ -15,11 +15,11 @@ other part is a decreasing triangle pattern with *
 
 def pattern2(n_row):
     for i in range(n_row):
-        # increasing triangle pattern of *
+        # increasing triangle pattern of space
         for k in range(i + 1):
             print(" ", end=" ")
 
-        # decreasing triangle pattern of space
+        # decreasing triangle pattern of *
         for j in range(i, n_row):
             print("*", end=" ")
 
