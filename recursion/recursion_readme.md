@@ -1,3 +1,21 @@
+## Basic Syntax of Recursion
+#### Every recursive function has two parts:
+    - Base Case → Stops the recursion.
+    - Recursive Case → Calls itself on a smaller version of the problem.
+#### General template:
+    ```python
+    def recursive_function(parameters):
+        # Base case
+        if stopping_condition:
+            return answer
+    
+        # Work (optional)
+    
+        # Recursive call
+        return recursive_function(smaller_problem)
+    ```
+
+
 1. In recursion, we should have a base case.
 ex: 4! = 4 x 3!
        = 4 x 3 x 2!
