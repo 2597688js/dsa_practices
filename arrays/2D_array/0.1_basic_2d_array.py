@@ -27,6 +27,21 @@ def print_2d_upper_triangular_elements(arr):
                 print(" ", end=" ")
         print()
 
+def print_2d_transpose(arr):
+
+    row = len(arr)
+    col = len(arr[0])
+
+    transposed_arr = [[0] * row for _ in range(col)]
+
+
+    for i in range(col):
+        for j in range(row):
+            transposed_arr[i][j] = arr[j][i]
+            # print(arr[j][i], end=" ")
+
+        # print()
+    print(transposed_arr)
 
 if __name__ == "__main__":
     arr_2d = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
@@ -38,4 +53,7 @@ if __name__ == "__main__":
     print_2d_array_diagonal_elements(arr_2d)
     print()
     print_2d_upper_triangular_elements(arr_2d)
+    print()
+    arr1 = [[1,2], [3,4], [5,6]]
+    print_2d_transpose(arr1)
     
