@@ -1,0 +1,493 @@
+<meta charset="utf-8">
+<title>__TITLE__</title>
+<style>
+  :root {
+    --bg: #f7f7f8;
+    --panel-bg: #ffffff;
+    --border: #e0e0e3;
+    --text: #1c1c1f;
+    --text-dim: #6b6b73;
+    --code-bg: #f2f2f5;
+    --code-line-current: #fff3b0;
+    --box-bg: #ffffff;
+    --box-border: #c9c9d1;
+    --accent: #4f6df5;
+    --accent-text: #ffffff;
+    --tag-compare: #f5c542;
+    --tag-found: #3fbf6f;
+    --tag-eliminated: #b8b8c0;
+    --tag-swap: #f57a42;
+    --tag-sorted: #3fbf6f;
+    --tag-pivot: #9b6df5;
+    --tag-visiting: #4f9bf5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17171a;
+      --panel-bg: #1f1f23;
+      --border: #333338;
+      --text: #ececee;
+      --text-dim: #97979f;
+      --code-bg: #17171a;
+      --code-line-current: #4a4020;
+      --box-bg: #26262b;
+      --box-border: #45454d;
+      --accent: #7d95ff;
+      --accent-text: #10101a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17171a;
+    --panel-bg: #1f1f23;
+    --border: #333338;
+    --text: #ececee;
+    --text-dim: #97979f;
+    --code-bg: #17171a;
+    --code-line-current: #4a4020;
+    --box-bg: #26262b;
+    --box-border: #45454d;
+    --accent: #7d95ff;
+    --accent-text: #10101a;
+  }
+  :root[data-theme="light"] {
+    --bg: #f7f7f8;
+    --panel-bg: #ffffff;
+    --border: #e0e0e3;
+    --text: #1c1c1f;
+    --text-dim: #6b6b73;
+    --code-bg: #f2f2f5;
+    --code-line-current: #fff3b0;
+    --box-bg: #ffffff;
+    --box-border: #c9c9d1;
+    --accent: #4f6df5;
+    --accent-text: #ffffff;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 1.5rem;
+  }
+  h1 {
+    font-size: 1.15rem;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: minmax(0, 1fr); }
+  }
+  .panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .panel-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* code panel */
+  .code-body {
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    background: var(--code-bg);
+  }
+  .code-line {
+    display: flex;
+    white-space: pre;
+    padding: 0 0.6rem;
+  }
+  .code-line.current { background: var(--code-line-current); }
+  .code-line .ln {
+    color: var(--text-dim);
+    width: 2.2rem;
+    flex: none;
+    text-align: right;
+    margin-right: 0.9rem;
+    user-select: none;
+  }
+
+  /* stage panel */
+  .stage-wrap { grid-column: 1 / -1; }
+  .stage-body {
+    padding: 1.6rem 1rem 2.2rem 1rem;
+    overflow-x: auto;
+  }
+  .stage-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    min-height: 100px;
+    justify-content: center;
+  }
+  .cell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .box {
+    min-width: 42px;
+    height: 42px;
+    padding: 0 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--box-bg);
+    border: 2px solid var(--box-border);
+    border-radius: 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+  }
+  .idx {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    margin-top: 0.25rem;
+  }
+  .flags {
+    position: absolute;
+    bottom: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 4px;
+  }
+  .flag {
+    background: var(--accent);
+    color: var(--accent-text);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .box.tag-compare   { border-color: var(--tag-compare);   background: color-mix(in srgb, var(--tag-compare) 25%, var(--box-bg)); }
+  .box.tag-found     { border-color: var(--tag-found);     background: color-mix(in srgb, var(--tag-found) 30%, var(--box-bg)); transform: scale(1.08); }
+  .box.tag-eliminated{ border-color: var(--tag-eliminated);opacity: 0.35; }
+  .box.tag-swap      { border-color: var(--tag-swap);      background: color-mix(in srgb, var(--tag-swap) 30%, var(--box-bg)); }
+  .box.tag-sorted    { border-color: var(--tag-sorted);    background: color-mix(in srgb, var(--tag-sorted) 22%, var(--box-bg)); }
+  .box.tag-pivot     { border-color: var(--tag-pivot);     background: color-mix(in srgb, var(--tag-pivot) 28%, var(--box-bg)); }
+  .box.tag-visiting  { border-color: var(--tag-visiting);  background: color-mix(in srgb, var(--tag-visiting) 28%, var(--box-bg)); }
+
+  .grid-rows { display: flex; flex-direction: column; gap: 0.5rem; align-items: center; }
+
+  .unsupported {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  /* narration */
+  .narration-wrap { grid-column: 1 / -1; }
+  .narration-body {
+    padding: 0.9rem 1rem;
+    font-size: 0.95rem;
+    min-height: 1.4em;
+  }
+
+  /* controls */
+  .controls-wrap { grid-column: 1 / -1; }
+  .controls-body {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.8rem 1rem;
+    flex-wrap: wrap;
+  }
+  button {
+    background: var(--accent);
+    color: var(--accent-text);
+    border: none;
+    border-radius: 7px;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  button:disabled { opacity: 0.4; cursor: default; }
+  input[type="range"] { flex: 1; min-width: 120px; }
+  .step-counter {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    min-width: 4.5rem;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .idx { font-variant-numeric: tabular-nums; }
+  select {
+    background: var(--panel-bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .box { transition: none; }
+  }
+</style>
+
+<h1>__TITLE__</h1>
+<div class="layout">
+  <div class="panel code-panel">
+    <div class="panel-title">Source</div>
+    <div class="code-body" id="codeBody"></div>
+  </div>
+  <div class="panel stage-wrap">
+    <div class="panel-title">Trace</div>
+    <div class="stage-body" id="stageBody"></div>
+  </div>
+  <div class="panel narration-wrap">
+    <div class="panel-title">Narration</div>
+    <div class="narration-body" id="narrationBody"></div>
+  </div>
+  <div class="panel controls-wrap">
+    <div class="controls-body">
+      <button class="secondary" id="btnFirst" title="First step">|&lt;</button>
+      <button class="secondary" id="btnPrev" title="Previous step (←)">&lt; Prev</button>
+      <button id="btnPlay" title="Play/Pause (space)">Play</button>
+      <button class="secondary" id="btnNext" title="Next step (→)">Next &gt;</button>
+      <button class="secondary" id="btnLast" title="Last step">&gt;|</button>
+      <input type="range" id="scrub" min="0" max="0" value="0" />
+      <span class="step-counter" id="stepCounter">1 / 1</span>
+      <select id="speed" title="Playback speed">
+        <option value="1800">0.5x</option>
+        <option value="1000" selected>1x</option>
+        <option value="550">2x</option>
+        <option value="280">4x</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<script>
+  const DATA = __TRACE_DATA__;
+
+  const codeBody = document.getElementById("codeBody");
+  const stageBody = document.getElementById("stageBody");
+  const narrationBody = document.getElementById("narrationBody");
+  const scrub = document.getElementById("scrub");
+  const stepCounter = document.getElementById("stepCounter");
+  const btnPlay = document.getElementById("btnPlay");
+  const btnPrev = document.getElementById("btnPrev");
+  const btnNext = document.getElementById("btnNext");
+  const btnFirst = document.getElementById("btnFirst");
+  const btnLast = document.getElementById("btnLast");
+  const speedSelect = document.getElementById("speed");
+
+  let current = 0;
+  let playing = false;
+  let timer = null;
+
+  const sourceLines = (DATA.source_code || "").replace(/\n$/, "").split("\n");
+  codeBody.innerHTML = sourceLines
+    .map((line, i) => {
+      const n = i + 1;
+      return `<div class="code-line" data-line="${n}"><span class="ln">${n}</span><span class="code-text"></span></div>`;
+    })
+    .join("");
+  // set text content separately to avoid HTML injection from source code
+  [...codeBody.querySelectorAll(".code-line")].forEach((el, i) => {
+    el.querySelector(".code-text").textContent = sourceLines[i];
+  });
+
+  scrub.max = String(Math.max(DATA.steps.length - 1, 0));
+
+  function renderArrayStage(step) {
+    const arr = step.array || [];
+    const highlights = step.highlights || {};
+    const pointers = step.pointers || {};
+    const flagsByIndex = {};
+    Object.entries(pointers).forEach(([label, idx]) => {
+      (flagsByIndex[idx] = flagsByIndex[idx] || []).push(label);
+    });
+
+    const row = document.createElement("div");
+    row.className = "stage-row";
+    arr.forEach((val, i) => {
+      const cell = document.createElement("div");
+      cell.className = "cell";
+
+      const flags = flagsByIndex[i];
+      if (flags) {
+        const flagsEl = document.createElement("div");
+        flagsEl.className = "flags";
+        flags.forEach((label) => {
+          const f = document.createElement("div");
+          f.className = "flag";
+          f.textContent = label;
+          flagsEl.appendChild(f);
+        });
+        cell.appendChild(flagsEl);
+      }
+
+      const box = document.createElement("div");
+      const tag = highlights[String(i)];
+      box.className = "box" + (tag ? ` tag-${tag}` : "");
+      box.textContent = val;
+      cell.appendChild(box);
+
+      const idx = document.createElement("div");
+      idx.className = "idx";
+      idx.textContent = i;
+      cell.appendChild(idx);
+
+      row.appendChild(cell);
+    });
+    stageBody.innerHTML = "";
+    stageBody.appendChild(row);
+  }
+
+  function renderGridStage(step) {
+    const grid = step.grid || [];
+    const highlights = step.highlights || {};
+    const pointers = step.pointers || {};
+    const flagsByKey = {};
+    Object.entries(pointers).forEach(([label, key]) => {
+      (flagsByKey[key] = flagsByKey[key] || []).push(label);
+    });
+
+    const wrap = document.createElement("div");
+    wrap.className = "grid-rows";
+    grid.forEach((rowVals, r) => {
+      const row = document.createElement("div");
+      row.className = "stage-row";
+      rowVals.forEach((val, c) => {
+        const key = `${r},${c}`;
+        const cell = document.createElement("div");
+        cell.className = "cell";
+
+        const flags = flagsByKey[key];
+        if (flags) {
+          const flagsEl = document.createElement("div");
+          flagsEl.className = "flags";
+          flags.forEach((label) => {
+            const f = document.createElement("div");
+            f.className = "flag";
+            f.textContent = label;
+            flagsEl.appendChild(f);
+          });
+          cell.appendChild(flagsEl);
+        }
+
+        const box = document.createElement("div");
+        const tag = highlights[key];
+        box.className = "box" + (tag ? ` tag-${tag}` : "");
+        box.textContent = val;
+        cell.appendChild(box);
+
+        row.appendChild(cell);
+      });
+      wrap.appendChild(row);
+    });
+    stageBody.innerHTML = "";
+    stageBody.appendChild(wrap);
+  }
+
+  function renderUnsupportedStage(step) {
+    stageBody.innerHTML =
+      `<div class="unsupported">No built-in renderer for structure "${DATA.structure}".` +
+      ` See references/other-data-structures.md for a renderStage function to paste in here.</div>`;
+  }
+
+  function renderStage(step) {
+    if (DATA.structure === "array") return renderArrayStage(step);
+    if (DATA.structure === "grid") return renderGridStage(step);
+    return renderUnsupportedStage(step);
+  }
+
+  function render() {
+    const step = DATA.steps[current];
+    if (!step) return;
+
+    [...codeBody.querySelectorAll(".code-line")].forEach((el) => {
+      el.classList.toggle("current", Number(el.dataset.line) === step.line);
+    });
+    const currentEl = codeBody.querySelector(".code-line.current");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (currentEl) currentEl.scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" });
+
+    renderStage(step);
+
+    narrationBody.textContent = step.message || "";
+
+    scrub.value = String(current);
+    stepCounter.textContent = `${current + 1} / ${DATA.steps.length}`;
+    btnPrev.disabled = current === 0;
+    btnFirst.disabled = current === 0;
+    btnNext.disabled = current === DATA.steps.length - 1;
+    btnLast.disabled = current === DATA.steps.length - 1;
+  }
+
+  function goTo(i) {
+    current = Math.max(0, Math.min(DATA.steps.length - 1, i));
+    render();
+    if (current === DATA.steps.length - 1) pause();
+  }
+
+  function play() {
+    if (DATA.steps.length <= 1) return;
+    playing = true;
+    btnPlay.textContent = "Pause";
+    clearInterval(timer);
+    timer = setInterval(() => {
+      if (current >= DATA.steps.length - 1) { pause(); return; }
+      goTo(current + 1);
+    }, Number(speedSelect.value));
+  }
+
+  function pause() {
+    playing = false;
+    btnPlay.textContent = "Play";
+    clearInterval(timer);
+  }
+
+  btnPlay.addEventListener("click", () => (playing ? pause() : play()));
+  btnPrev.addEventListener("click", () => { pause(); goTo(current - 1); });
+  btnNext.addEventListener("click", () => { pause(); goTo(current + 1); });
+  btnFirst.addEventListener("click", () => { pause(); goTo(0); });
+  btnLast.addEventListener("click", () => { pause(); goTo(DATA.steps.length - 1); });
+  scrub.addEventListener("input", () => { pause(); goTo(Number(scrub.value)); });
+  speedSelect.addEventListener("change", () => { if (playing) play(); });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { pause(); goTo(current + 1); }
+    else if (e.key === "ArrowLeft") { pause(); goTo(current - 1); }
+    else if (e.key === " ") { e.preventDefault(); playing ? pause() : play(); }
+  });
+
+  render();
+</script>

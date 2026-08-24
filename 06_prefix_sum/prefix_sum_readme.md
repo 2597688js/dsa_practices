@@ -65,3 +65,16 @@ for num in arr:
 - **Build:** O(n)
 - **Query:** O(1)
 - **Space:** O(n)
+
+## Problems
+- Leetcode 560
+- Leetcode 523
+- Leetcode 525
+- Leetcode 724
+- Leetcode 303
+- Leetcode 304
+- Leetcode 1480
+- Leetcode 1314
+
+## Prefix Product Array
+- Leetcode 238

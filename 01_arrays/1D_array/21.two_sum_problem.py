@@ -57,9 +57,34 @@ class Solution(object):
             index_map[num] = i
 
 
-nums = [2, 7, 11, 15]
-target = 9
-solution = Solution()
-print(solution.twoSum(nums, target))  # Output: [0, 1]
+class BruteSolution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        for i in range(len(nums)):
+            for j in range(i+1, len(nums)):
+                if nums[i] + nums[j] == target:
+                    return [i, j]
+
+        return False
+
+
+class OptimalSolution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        d = {}
+
+        for i in range(len(nums)):
+            remaining = target - nums[i]
+            if remaining in d:
+                return [i, d[remaining]]
+
+            d[nums[i]] = i
+
+
+# nums = [2, 7, 11, 15]
+# target = 9
+# solution = Solution()
+# print(solution.twoSum(nums, target))  # Output: [0, 1]
+print()
+solution = BruteSolution()
+print(solution.twoSum([3,2,4], 6))  # Output: [0, 1]
 
 
