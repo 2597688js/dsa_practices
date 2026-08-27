@@ -61,11 +61,6 @@ for num in arr:
 # Result: count = 2 (subarray [5] and [2,1,2])
 ```
 
-## Time Complexity
-- **Build:** O(n)
-- **Query:** O(1)
-- **Space:** O(n)
-
 ## Problems
 - Leetcode 560
 - Leetcode 523
