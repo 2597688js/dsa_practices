@@ -11,3 +11,33 @@ The following pattern problems can be solved by sliding window / two pointer app
 2. Longest subarray / substring where <condition>   -- Bruteforce, better, optimal
 
 3. Number of subarrays where <condition>  -- Bruteforce, better, optimal
+
+## Problems
+
+LeetCode 643.     Maximum Average Subarray I
+LeetCode 1456.    Maximum Number of Vowels in a Substring of Given Length
+LeetCode 1343.    Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold
+
+LeetCode 209.     Minimum Size Subarray Sum
+LeetCode 3.       Longest Substring Without Repeating Characters
+LeetCode 567.     Permutation in String
+LeetCode 438.     Find All Anagrams in a String
+LeetCode 1004.    Max Consecutive Ones III
+LeetCode 904.     Fruit Into Baskets
+LeetCode 424.     Longest Repeating Character Replacement
+LeetCode 1493.    Longest Subarray of 1's After Deleting One Element
+LeetCode 1423.    Maximum Points You Can Obtain from Cards
+LeetCode 1208.    Get Equal Substrings Within Budget
+LeetCode 1838.    Frequency of the Most Frequent Element
+LeetCode 1695.    Maximum Erasure Value
+LeetCode 992.     Subarrays with K Different Integers
+LeetCode 1248.    Count Number of Nice Subarrays
+LeetCode 930.     Binary Subarrays With Sum
+LeetCode 2962.    Count Subarrays Where Max Element Appears at Least K Times
+LeetCode 2444.    Count Subarrays With Fixed Bounds
+
+LeetCode 76.      Minimum Window Substring
+LeetCode 30.      Substring with Concatenation of All Words
+LeetCode 239.     Sliding Window Maximum
+LeetCode 1438.    Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
+LeetCode 995.     Minimum Number of K Consecutive Bit Flips
