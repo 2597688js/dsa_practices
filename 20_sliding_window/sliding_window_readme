@@ -14,7 +14,7 @@ The following pattern problems can be solved by sliding window / two pointer app
 
 ## Problems
 
-LeetCode 643.     Maximum Average Subarray I
+LeetCode 643.     Maximum Average Subarray I - DONE
 LeetCode 644     Maximum Average Subarray II - (Hard)
 LeetCode 1456.    Maximum Number of Vowels in a Substring of Given Length
 LeetCode 1343.    Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold
